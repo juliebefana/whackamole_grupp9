@@ -1,7 +1,12 @@
 // Select elements
+const nameEntry = document.getElementById('name-entry');
+const hideboard = document.getElementById('hide-board');
+const playerNameInput = document.getElementById('player-name-input');
+const submitNameButton = document.getElementById('submit-name-button');
 const gameBoard = document.getElementById('game-board');
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('start-button');
+const playerNameDisplay = document.getElementById('player-name-display');
 
 // Game variables
 let timeLeft = 30;
@@ -10,9 +15,28 @@ let maxMoles = 3;
 let activeMoles = 0;
 let gameActive = false;
 let moleInterval;
+let playerName = 'Unnamed Player'; // Default name
+
+// Event listener for player-name submission
+submitNameButton.addEventListener('click', () => {
+  const enteredName = playerNameInput.value.trim();
+  if (enteredName) {
+    playerName = enteredName;
+    playerNameDisplay.textContent = `Player: ${playerName}`;
+    nameEntry.style.display = 'none';
+    hideboard.style.display = 'block';
+    createBoard();
+  } else {
+    alert('Please enter a valid name.');
+  }
+});
 
 // Create the game board (5x5)
 function createBoard() {
+
+  // Clear any existing cells
+  gameBoard.innerHTML = '';
+  
   for (let i = 0; i < 25; i++) {
     const cell = document.createElement('div');
     cell.classList.add('cell');
@@ -38,6 +62,7 @@ function startGame() {
   timeLeft = 60;
   activeMoles = 0;
   timerElement.textContent = `Time Left: ${timeLeft}`;
+
 
   // Start the countdown timer
   timer = setInterval(() => {
