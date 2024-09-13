@@ -8,9 +8,11 @@ const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('start-button');
 const playerNameDisplay = document.getElementById('player-name-display');
 const pointsDisplay = document.getElementById("points");
+{/* <div id="data-container"></div>
+const dataContainer = document.getElementById("data-container"); */}
 
 // Game variables
-let timeLeft = 60;  // Updated to 60 seconds
+let timeLeft = 5;  // Updated to 60 seconds
 let timer;
 let maxMoles = 3;
 let activeMoles = 0;
@@ -66,7 +68,7 @@ function handleCellClick(e) {
 function startGame() {
   console.log("Game started!");
   gameActive = true;
-  timeLeft = 60;  // Reset the timer to 60 seconds
+  timeLeft = 5;  // Reset the timer to 60 seconds
   activeMoles = 0;
   points = 0;
   pointsDisplay.textContent = `Points: ${points}`;
@@ -100,6 +102,7 @@ function endGame() {
   gameActive = false;
   startButton.disabled = false;  // Re-enable the start button
   alert('Game Over!');
+  postData(playerName, points);
 }
 
 // Function to spawn a mole in a random cell
@@ -142,6 +145,47 @@ startButton.addEventListener('click', () => {
   }
 });
 
+
+//HÄmta ledartavlan
+async function fetchData() {
+  try {
+      const response = await fetch('http://localhost:3000/getData');
+      const data = await response.json();
+      const container = document.getElementById('data-container');
+      container.innerHTML = data.map(item => `<p>${item.name}: ${item.score} poäng</p>`).join('');
+
+      console.log(data);
+  } catch (error) {
+      console.error('Fel vid hämtning av data:', error);
+  }
+}
+
+//posta poäng till DB
+async function postData(playerName, points) {
+  if (!playerName || typeof playerName !== 'string') {
+    console.error('Fel: Spelarnamnet är ogiltigt.');
+    return;
+}
+
+  const data = { name: playerName, score: points };
+
+  try {
+      const response = await fetch('http://localhost:3000/postData', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log('Data skickad till servern:', result);
+  } catch (error) {
+      console.error('Fel vid skickande av data:', error);
+  }
+}
+
 // Initialize the game board on page load
+fetchData();
 createBoard();
 
