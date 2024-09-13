@@ -8,10 +8,27 @@
 </head>
 <body>
 
-  <h1>Whack-a-Mole</h1>
+  <div id="name-entry">
+    <h1>Enter Your Name</h1>
+    <input type="text" id="player-name-input" placeholder="Enter your name">
+    <button id="submit-name-button">Submit</button>
+  </div>
+
+  <div id="hide-board">
+    <!-- Header and Game Info Container -->
+    <div id="header-container">
+      <h1 class="Gamename">Whack-a-Mole</h1>
+
+      <div id="info-container">
+        <div id="player-name-display"></div>
+        <div id="timer">Time Left: 60</div>
+        <button id="start-button">Start Game</button>
+      </div>
+    </div>
+
+     <!-- Game Board -->
   <div id="game-board"></div>
-  <div id="timer">Time Left: 60</div>
-  <button id="start-button">Start Game</button>
+</div>
 
   <script src="script.js"></script>
 
