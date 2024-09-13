@@ -7,6 +7,7 @@ const gameBoard = document.getElementById('game-board');
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('start-button');
 const playerNameDisplay = document.getElementById('player-name-display');
+const pointsDisplay = document.getElementById("points");
 
 // Game variables
 let timeLeft = 60;  // Updated to 60 seconds
@@ -16,6 +17,7 @@ let activeMoles = 0;
 let gameActive = false;
 let moleInterval;
 let playerName = 'Unnamed Player'; // Default name
+let points = 0;
 
 // Event listener for player-name submission
 submitNameButton.addEventListener('click', () => {
@@ -53,6 +55,8 @@ function handleCellClick(e) {
     // If the mole is clicked, remove it
     cell.classList.remove('mole');
     activeMoles--;
+    points++;
+    console.log("Points: " + points);
     console.log("Mole whacked! Active moles:", activeMoles);
   }
 }
@@ -63,6 +67,8 @@ function startGame() {
   gameActive = true;
   timeLeft = 60;  // Reset the timer to 60 seconds
   activeMoles = 0;
+  points = 0;
+  pointsDisplay.textContent = `Points: ${points}`;
   timerElement.textContent = `Time Left: ${timeLeft}`;
 
   // Disable the start button while the game is active
@@ -138,35 +144,3 @@ startButton.addEventListener('click', () => {
 // Initialize the game board on page load
 createBoard();
 
-
-/*
-const startButton = document.querySelector(".game-start-button");
-const pointsDisplay = document.getElementById("points");
-const timeDisplay = document.getElementById("time");
-
-let points = 0;
-let timeLeft = 60;
-let timer;
-
-startButton.addEventListener("click", startNewGame);
-
-function startNewGame() {
-  points = 0;
-  timeLeft = 60;
-  pointsDisplay.textContent = `Points: ${points}`;
-  timeDisplay.textContent = `Time Left: ${timeLeft}`;
-
-  clearInterval(timer); // Clear any previous timer
-  timer = setInterval(countDown, 1000); // Start countdown
-}
-
-function countDown() {
-  if (timeLeft > 0) {
-    timeLeft--;
-    timeDisplay.textContent = `Time Left: ${timeLeft}`;
-  } else {
-    clearInterval(timer); // Stop the timer when time reaches 0
-    document.getElementById("status").textContent = "Game Over";
-  }
-}
-  */
