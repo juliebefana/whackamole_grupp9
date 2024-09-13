@@ -56,6 +56,7 @@ function handleCellClick(e) {
     cell.classList.remove('mole');
     activeMoles--;
     points++;
+    pointsDisplay.textContent = `Points: ${points}`;
     console.log("Points: " + points);
     console.log("Mole whacked! Active moles:", activeMoles);
   }
