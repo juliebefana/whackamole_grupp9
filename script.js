@@ -12,7 +12,7 @@ const pointsDisplay = document.getElementById("points");
 const dataContainer = document.getElementById("data-container"); */}
 
 // Game variables
-let timeLeft = 5;  // Updated to 60 seconds
+let timeLeft = 30;  // Updated to 60 seconds
 let timer;
 let maxMoles = 3;
 let activeMoles = 0;
@@ -20,6 +20,7 @@ let gameActive = false;
 let moleInterval;
 let playerName = 'Unnamed Player'; // Default name
 let points = 0;
+let moleAppearTimes = {};  // To store the appearance time of each mole
 
 // Event listener for player-name submission
 submitNameButton.addEventListener('click', () => {
@@ -53,14 +54,22 @@ function createBoard() {
 // Handle cell click (Whacking the mole)
 function handleCellClick(e) {
   const cell = e.target;
+  const moleId = cell.dataset.id;  // Get the mole's ID
   if (cell.classList.contains('mole')) {
     // If the mole is clicked, remove it
     cell.classList.remove('mole');
     activeMoles--;
     points++;
     pointsDisplay.textContent = `Points: ${points}`;
-    console.log("Points: " + points);
-    console.log("Mole whacked! Active moles:", activeMoles);
+
+    // Calculate the time the mole was on the screen
+    const moleAppearedAt = moleAppearTimes[moleId];
+    const timeNow = Date.now();
+    const timeOnScreen = (timeNow - moleAppearedAt) / 1000;  // Convert to seconds
+    console.log(`Mole whacked! Time on screen: ${timeOnScreen.toFixed(2)} seconds`);
+
+    // Clean up the appearance time for the mole
+    delete moleAppearTimes[moleId];
   }
 }
 
