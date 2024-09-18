@@ -25,24 +25,25 @@ const scoreSchema = new mongoose.Schema({
 });
 const Score = mongoose.model('Score', scoreSchema);
 
-// Routes
+// Get top 10 scores
 app.get('/getData', async (req, res) => {
   try {
-    const scores = await Score.find().sort({ score: -1 }); // Sort scores in descending order
-    res.json(scores);
+    const topScores = await Score.find().sort({ score: -1 }).limit(10); // Sort by score descending and limit to 10
+    res.json(topScores);
   } catch (error) {
-    res.status(500).send('Error retrieving data');
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
+// Post a new score
 app.post('/postData', async (req, res) => {
+  const { name, score } = req.body;
   try {
-    const { name, score } = req.body;
     const newScore = new Score({ name, score });
     await newScore.save();
     res.json({ message: 'Score saved successfully' });
   } catch (error) {
-    res.status(500).send('Error saving score');
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
@@ -50,3 +51,4 @@ app.post('/postData', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+

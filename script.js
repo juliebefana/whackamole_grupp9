@@ -110,9 +110,12 @@ function endGame() {
   clearInterval(moleInterval);
   gameActive = false;
   startButton.disabled = false;  // Re-enable the start button
-  alert('Game Over!');
-  postData(playerName, points);
+
+  postData(playerName, points).then(() => {
+    showPopup(); // Show the popup after posting data
+  });
 }
+
 
 // Function to spawn a mole in a random cell
 function spawnMole() {
@@ -154,23 +157,34 @@ startButton.addEventListener('click', () => {
   }
 });
 
-
-// Hämta ledartavlan
-async function fetchData() {
+//Show and fetch result
+async function showPopup() {
+  const popup = document.getElementById('popup');
+  const resultContainer = document.getElementById('result-container');
+  
   try {
     const response = await fetch('http://localhost:3000/getData');
     const data = await response.json();
-    const container = document.getElementById('result-container');
-
-    // Visa datan i container
-    container.innerHTML = data.map(item => `<p>${item.name}: ${item.score} poäng</p>`).join('');
-
-    console.log(data);
+    
+    // Display data in the popup
+    resultContainer.innerHTML = data.map(item => `<p>${item.name}: ${item.score} poäng</p>`).join('');
   } catch (error) {
     console.error('Fel vid hämtning av data:', error);
+    resultContainer.innerHTML = '<p>Det gick inte att hämta ledartavlan.</p>';
   }
+
+  popup.style.display = 'block'; // Show the popup
+
+  // Set timeout to close the popup after 10 seconds
+  setTimeout(() => {
+   popup.style.display = 'none';
+  }, 10000); // 10000 milliseconds = 10 seconds
 }
 
+// Close popup when the user clicks on <span> (x)
+document.getElementById('close-popup').addEventListener('click', () => {
+  document.getElementById('popup').style.display = 'none';
+});
 
 
 //posta poäng till DB
