@@ -20,6 +20,7 @@ let gameActive = false;
 let moleInterval;
 let playerName = 'Unnamed Player'; // Default name
 let points = 0;
+let speed = 10.00;
 let moleAppearTimes = {};  // To store the appearance time of each mole
 
 // Event listener for player-name submission
@@ -66,12 +67,15 @@ function handleCellClick(e) {
     const moleAppearedAt = moleAppearTimes[moleId];
     const timeNow = Date.now();
     const timeOnScreen = (timeNow - moleAppearedAt) / 1000;  // Convert to seconds
+    if(timeOnScreen < speed){
+      speed = timeOnScreen;
+    }
     console.log(`Mole whacked! Time on screen: ${timeOnScreen.toFixed(2)} seconds`);
-
     // Clean up the appearance time for the mole
     delete moleAppearTimes[moleId];
-  }
 }
+  }
+
 
 // Start game logic
 function startGame() {
@@ -111,9 +115,11 @@ function endGame() {
   gameActive = false;
   startButton.disabled = false;  // Re-enable the start button
 
-  postData(playerName, points).then(() => {
-    showPopup(); // Show the popup after posting data
+  postData(playerName, points, speed).then(() => {
+    showPopup();
+    speed= 10; // Show the popup after posting data
   });
+  console.log(postData);
 }
 
 
@@ -128,6 +134,8 @@ function spawnMole() {
     moleCell.classList.add('mole');
     activeMoles++;
     console.log("Mole appeared in cell:", moleCell.dataset.id, "Active moles:", activeMoles);
+
+    moleAppearTimes[moleCell.dataset.id] = Date.now();
     
     // Mole disappears after a random time (max 4 seconds) if not clicked
     setTimeout(() => {
@@ -135,6 +143,7 @@ function spawnMole() {
         moleCell.classList.remove('mole');
         activeMoles--;
         console.log("Mole disappeared from cell:", moleCell.dataset.id, "Active moles:", activeMoles);
+        delete moleAppearTimes[moleCell.dataset.id];
       }
     }, getRandomDisappearInterval());  // Mole disappears after random time
   }
@@ -188,13 +197,13 @@ document.getElementById('close-popup').addEventListener('click', () => {
 
 
 //posta poäng till DB
-async function postData(playerName, points) {
+async function postData(playerName, points, speed) {
   if (!playerName || typeof playerName !== 'string') {
     console.error('Fel: Spelarnamnet är ogiltigt.');
     return;
 }
 
-  const data = { name: playerName, score: points };
+  const data = { name: playerName, score: points, speed: speed };
 
   try {
       const response = await fetch('http://localhost:3000/postData', {

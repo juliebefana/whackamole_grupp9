@@ -21,7 +21,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Define a schema and model for scores
 const scoreSchema = new mongoose.Schema({
   name: String,
-  score: Number
+  score: Number,
+  speed: Number
 });
 const Score = mongoose.model('Score', scoreSchema);
 
@@ -37,9 +38,9 @@ app.get('/getData', async (req, res) => {
 
 // Post a new score
 app.post('/postData', async (req, res) => {
-  const { name, score } = req.body;
+  const { name, score, speed } = req.body;
   try {
-    const newScore = new Score({ name, score });
+    const newScore = new Score({ name, score, speed });
     await newScore.save();
     res.json({ message: 'Score saved successfully' });
   } catch (error) {
