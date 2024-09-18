@@ -146,19 +146,23 @@ startButton.addEventListener('click', () => {
 });
 
 
-//HÄmta ledartavlan
+// Hämta ledartavlan
 async function fetchData() {
   try {
-      const response = await fetch('http://localhost:3000/getData');
-      const data = await response.json();
-      const container = document.getElementById('data-container');
-      container.innerHTML = data.map(item => `<p>${item.name}: ${item.score} poäng</p>`).join('');
+    const response = await fetch('http://localhost:3000/getData');
+    const data = await response.json();
+    const container = document.getElementById('result-container');
 
-      console.log(data);
+    // Visa datan i container
+    container.innerHTML = data.map(item => `<p>${item.name}: ${item.score} poäng</p>`).join('');
+
+    console.log(data);
   } catch (error) {
-      console.error('Fel vid hämtning av data:', error);
+    console.error('Fel vid hämtning av data:', error);
   }
 }
+
+
 
 //posta poäng till DB
 async function postData(playerName, points) {
