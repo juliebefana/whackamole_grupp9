@@ -20,14 +20,15 @@ body {
 
 /* name entry form */
 #name-entry {
-  border: 2px solid green;
+  border: 2px solid black;
   width: 350px;
   height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center; 
+  text-align: center;
+  background-color: rgba(67, 142, 73, 0.7);
 }
 
 #player-name-input {
@@ -62,10 +63,9 @@ body {
 }
 
 #player-name-display{
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #fff;
-  font-weight: 500;
+  font-size: 22px;
+  color: #3498db;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Container for game info */
@@ -75,7 +75,6 @@ body {
   align-items: center;
   gap: 30px;
   margin-bottom: 20px;
-  font-size: 18px;
 }
 
 /* Timer and Points */
