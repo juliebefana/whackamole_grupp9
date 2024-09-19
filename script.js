@@ -182,11 +182,11 @@ startButton.addEventListener("click", () => {
 //Show and fetch result
 async function showPopup() {
   const popup = document.getElementById("popup");
-  const pointsResultContainer = document.getElementById(
-    "points-result-container"
+  const pointsResultsContainer = document.getElementById(
+    "points-results-container"
   );
-  const speedResultContainer = document.getElementById(
-    "speed-result-container"
+  const speedResultsContainer = document.getElementById(
+    "speed-results-container"
   );
 
   try {
@@ -194,19 +194,19 @@ async function showPopup() {
     const data = await response.json();
 
     // Display data in the popup
-    pointsResultContainer.innerHTML = data
+    pointsResultsContainer.innerHTML = data
       .map((item) => `<p>${item.name}: ${item.score} poäng</p>`)
       .join("");
 
-    speedResultContainer.innerHTML = data
+    speedResultsContainer.innerHTML = data
       .map((item) => `<p>${item.name}: ${item.speed} </p>`)
       .join("");
   } catch (error) {
     console.error("Fel vid hämtning av data:", error);
-    pointsResultContainer.innerHTML =
+    pointsResultsContainer.innerHTML =
       "<p>Det gick inte att hämta ledartavlan.</p>";
 
-    speedResultContainer.innerHTML =
+    speedResultsContainer.innerHTML =
       "<p>Det gick inte att hämta hastighetsresultaten.</p>";
   }
 
