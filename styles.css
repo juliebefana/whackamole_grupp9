@@ -198,8 +198,8 @@ body {
 
 .results-container {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
+  flex-direction: column wrap;
+  gap: 50px;
 }
 
 #points-result-container p,

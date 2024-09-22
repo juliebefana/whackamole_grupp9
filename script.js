@@ -201,6 +201,7 @@ async function showPopup() {
     speedResultsContainer.innerHTML = data
       .map((item) => `<p>${item.name}: ${item.speed} </p>`)
       .join("");
+      console.log(data);
   } catch (error) {
     console.error("Fel vid hämtning av data:", error);
     pointsResultsContainer.innerHTML =
