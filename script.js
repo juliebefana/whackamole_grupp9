@@ -83,7 +83,7 @@ function handleCellClick(e) {
 function startGame() {
   console.log("Game started!");
   gameActive = true;
-  timeLeft = 15; // Reset the timer to 60 seconds
+  timeLeft = 60; // Reset the timer to 60 seconds
   activeMoles = 0;
   points = 0;
   pointsDisplay.textContent = `Points: ${points}`;
