@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whack-a-Mole</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="data-container"></div>
+    <div id="name-entry">
+      <h1>Enter Your Name</h1>
+      <input type="text" id="player-name-input" placeholder="Enter your name" />
+      <button id="submit-name-button">Submit</button>
+    </div>
+
+    <div id="hide-board">
+      <!-- Header and Game Info Container -->
+      <div id="header-container">
+        <h1 class="Gamename">Whack-a-Mole</h1>
+
+        <div id="info-container">
+          <div id="player-name-display"></div>
+          <div id="timer">Time Left: 60</div>
+          <div id="points">Points : 0</div>
+          <button id="start-button">Start Game</button>
+        </div>
+      </div>
+
+      <!-- Game Board -->
+      <div id="game-board"></div>
+    </div>
+
+    <!-- Popup Container -->
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span id="close-popup" class="close">&times;</span>
+        <h1>Game Over</h1>
+        <h2>Ledartavla</h2>
+        <div class="results-container">
+          <div>
+          <div>Top 10 Highest Points</div>
+          <div id="points-results-container"></div>
+        </div>
+        <div>
+          <div>Top 10 Fastest</div>
+          <div id="speed-results-container"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
